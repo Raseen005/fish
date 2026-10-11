@@ -11,46 +11,55 @@
         body {
             margin: 0; background-color: #e2e8f0; color: #1e293b;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            display: flex; height: 100vh; height: 100dvh; overflow: hidden;
+            display: flex; flex-direction: row; 
+            height: 100vh; height: 100dvh; overflow: hidden;
+            box-sizing: border-box;
         }
         
+        /* --- DESKTOP AD SIDEBAR (25% Width) --- */
         #ad-sidebar {
-            width: 320px; background-color: #cbd5e1; border-right: 3px solid #94a3b8;
-            display: flex; align-items: center; justify-content: center; padding: 20px; flex-shrink: 0;
+            flex: 0 0 25%; max-width: 25%;
+            background-color: #cbd5e1; border-right: 3px solid #94a3b8;
+            display: flex; align-items: center; justify-content: center; padding: 10px; box-sizing: border-box;
         }
         
         .ad-banner {
             width: 100%; height: 100%; display: flex;
-            align-items: center; justify-content: center; color: #475569; font-weight: bold; font-size: 1.2rem;
+            align-items: center; justify-content: center; color: #475569; font-weight: bold; font-size: 1.1rem;
+            text-align: center;
         }
-        
+
+        /* --- DESKTOP MAIN GAME AREA (75% Width) --- */
         #main-area {
-            position: relative; /* Added so the absolute privacy link positions correctly */
-            flex-grow: 1; display: flex; flex-direction: column; align-items: center;
-            justify-content: flex-start; padding-top: 4vh; width: 100%; overflow: hidden;
+            flex: 0 0 75%; max-width: 75%;
+            display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
+            height: 100%; padding-top: 5px; box-sizing: border-box;
         }
         
         #canvas-container {
-            width: 100%; flex: 1 1 auto; display: flex; align-items: center;
-            justify-content: center; padding: 10px; box-sizing: border-box; min-height: 0; 
+            width: 100%; 
+            flex: 1 1 0; min-height: 0; min-width: 0; 
+            display: flex; align-items: center; justify-content: center; 
+            padding: 5px 10px; box-sizing: border-box; 
         }
         
         canvas {
             background-color: #f1f5f9; border: 4px solid #94a3b8; border-radius: 8px; cursor: none; 
             box-shadow: 0px 10px 25px rgba(0,0,0,0.1); touch-action: none; 
-            height: 100%; max-width: 100%; aspect-ratio: 800 / 550;
+            width: 100%; height: auto; max-height: 100%; 
+            aspect-ratio: 800 / 550;
+            object-fit: contain; 
             image-rendering: pixelated; image-rendering: crisp-edges;
         }
         
         #temp-controls {
-            display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; align-items: center;
-            width: 100%; padding: 10px 15px 20px 15px; box-sizing: border-box; flex: 0 0 auto;
+            display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; align-items: center;
+            width: 100%; padding: 10px 15px; box-sizing: border-box; flex: 0 0 auto;
         }
         
         button { 
-            padding: 9px 14px; font-weight: 600; cursor: pointer; border: 2px solid transparent;
-            border-radius: 6px; transition: 0.15s ease-in-out; font-size: 13px; outline: none;
-            touch-action: manipulation; 
+            padding: 8px 14px; font-weight: 600; cursor: pointer; border: 2px solid transparent;
+            border-radius: 5px; transition: 0.15s ease-in-out; font-size: 13px; outline: none; touch-action: manipulation; 
         }
         
         button:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
@@ -61,11 +70,11 @@
         }
         
         .brush-controls {
-            display: flex; align-items: center; gap: 5px; margin-right: 10px; background: #ffffff;
-            padding: 4px 15px; border-radius: 8px; border: 2px solid #cbd5e1; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            display: flex; align-items: center; gap: 6px; margin-right: 5px; background: #ffffff;
+            padding: 4px 12px; border-radius: 6px; border: 2px solid #cbd5e1; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
         
-        .btn-size { background-color: #f1f5f9; color: #475569; border-color: transparent; padding: 7px 12px;}
+        .btn-size { background-color: #f1f5f9; color: #475569; border-color: transparent; padding: 6px 10px;}
         .btn-size.active { background-color: #3b82f6; color: white; border-color: #2563eb; }
         .btn-reset { background-color: #b91c1c; color: white; margin-right: 5px; }
         .btn-empty { background-color: #f8fafc; color: #334155; border: 2px solid #cbd5e1;}
@@ -77,47 +86,87 @@
         .btn-plant { background-color: #166534; color: white; } 
         .btn-fish { background-color: #d97706; color: white; } 
         .btn-mite { background-color: #701a75; color: white; } 
-        .btn-wind { background-color: #e2e8f0; color: #334155; border: 2px solid #cbd5e1; } 
         .btn-gas { background-color: #84cc16; color: #3f6212; } 
         .btn-oil { background-color: #171717; color: white; } 
         .btn-lava { background-color: #dc2626; color: white; } 
         .btn-fire { background-color: #ea580c; color: white; }
+
+        .privacy-footer {
+            flex: 0 0 auto; width: 100%; text-align: center; padding-bottom: 5px;
+        }
+        .privacy-footer a {
+            font-size: 11px; color: #64748b; text-decoration: none; opacity: 0.5;
+        }
         
-        @media (max-width: 950px) {
-            body { flex-direction: column; }
-            #main-area { order: 1; padding-top: 10px; }
-            
-            #ad-sidebar { 
-                order: 2; width: 100%; height: 90px; 
-                border-right: none; border-top: 3px solid #94a3b8; padding: 5px; 
+        /* ------------------------------------------------------------- */
+        /* --- MOBILE TIGHT STACK (Canvas -> Buttons -> Ad -> Privacy) --- */
+        /* ------------------------------------------------------------- */
+        @media (max-width: 768px) { 
+            body { 
+                flex-direction: column; 
+                height: auto; 
+                min-height: 100vh;
+                overflow-y: auto; /* Restores natural scrolling for mobile */
             }
             
-            #canvas-container { padding: 5px; }
+            #main-area { 
+                display: contents; /* Magic trick: Flattens the layout so elements stack perfectly in order */
+            }
             
+            /* 1. Canvas at the absolute top */
+            #canvas-container { 
+                order: 1; 
+                width: 100%; 
+                flex: 0 0 auto; 
+                padding: 5px; box-sizing: border-box;
+            }
+            
+            canvas {
+                width: 100%; 
+                height: auto; 
+                max-height: none; /* Guarantees the canvas spans 100% of the screen width */
+            }
+            
+            /* 2. Buttons directly underneath the canvas */
             #temp-controls { 
-                display: grid;
+                order: 2; 
+                width: 100%;
+                flex: 0 0 auto; 
+                display: grid; 
                 grid-template-columns: repeat(3, 1fr); 
-                gap: 6px; 
-                padding: 10px;
-                max-height: 40vh; 
-                overflow-y: auto; 
+                gap: 5px; 
+                padding: 5px 10px;
+                max-height: none; 
             }
             
-            .brush-controls { 
-                grid-column: 1 / -1; 
-                justify-content: center; 
-                margin: 0 0 4px 0; 
+            /* 3. Ad Banner directly underneath the buttons */
+            #ad-sidebar { 
+                order: 3; 
+                width: 100%; 
+                max-width: 100%;
+                flex: 0 0 auto; 
+                height: auto; 
+                min-height: 55px; /* Exact height for AdSense mobile banner */
+                border-right: none; 
+                border-top: 2px solid #94a3b8; 
+                padding: 5px; 
+                background-color: transparent; /* Makes the banner area blend perfectly */
             }
             
-            .btn-reset {
-                grid-column: 1 / -1; 
-                margin: 0 0 4px 0;
+            /* 4. Privacy Policy pushed to the very bottom */
+            .privacy-footer { 
+                order: 4; 
+                flex: 0 0 auto; 
+                margin-top: auto; /* Pushes the link to the bottom edge, swallowing any leftover empty space */
+                padding: 15px 0;
             }
+            
+            .brush-controls { grid-column: 1 / -1; justify-content: center; margin: 0 0 4px 0; }
+            .btn-reset { grid-column: 1 / -1; margin: 0 0 4px 0; }
             
             button { 
-                width: 100%; 
-                margin: 0;
-                padding: clamp(6px, 2vh, 10px) 2px; 
+                width: 100%; margin: 0;
+                padding: clamp(6px, 1.5vh, 10px) 2px; 
                 font-size: clamp(10px, 3.5vw, 13px);
                 white-space: nowrap;
             }
@@ -125,6 +174,7 @@
     </style>
 </head>
 <body>
+    
     <div id="ad-sidebar">
         <div class="ad-banner">
             <!-- Google AdSense Display Unit -->
@@ -139,7 +189,8 @@
     </div>
     
     <div id="main-area">
-        <div id="canvas-container"><canvas id="gameCanvas"></canvas></div>
+        
+        <div id="canvas-container"><canvas id="gameCanvas" width="800" height="550"></canvas></div>
         
         <div id="temp-controls">
             <div class="brush-controls">
@@ -164,8 +215,10 @@
             <button class="element-btn btn-lava" onclick="window.selectElement(11, this)">Lava</button>
         </div>
         
-        <!-- Floating Privacy Link (Will not affect game scaling) -->
-        <a href="/privacy.html" style="position: absolute; bottom: 8px; right: 12px; font-size: 11px; color: #94a3b8; text-decoration: none; z-index: 50;">Privacy Policy</a>
+        <div class="privacy-footer">
+            <a href="/privacy.html">Privacy Policy</a>
+        </div>
+        
     </div>
     
     <script type="module" src="./js/main.js"></script>
