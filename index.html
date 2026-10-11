@@ -19,13 +19,15 @@
         }
         
         .ad-banner {
-            width: 100%; height: 100%; border: 2px dashed #64748b; display: flex;
+            width: 100%; height: 100%; display: flex;
             align-items: center; justify-content: center; color: #475569; font-weight: bold; font-size: 1.2rem;
+            /* Border removed so the Ad loads cleanly */
         }
         
         #main-area {
             flex-grow: 1; display: flex; flex-direction: column; align-items: center;
-            justify-content: flex-start; padding-top: 4vh; width: 100%; overflow: hidden;
+            /* Changed to allow scrolling down to the SEO text */
+            justify-content: flex-start; padding-top: 4vh; width: 100%; overflow-y: auto;
         }
         
         #canvas-container {
@@ -48,7 +50,6 @@
         button { 
             padding: 9px 14px; font-weight: 600; cursor: pointer; border: 2px solid transparent;
             border-radius: 6px; transition: 0.15s ease-in-out; font-size: 13px; outline: none;
-            /* Prevents double-tap zooming on mobile buttons */
             touch-action: manipulation; 
         }
         
@@ -82,13 +83,12 @@
         .btn-lava { background-color: #dc2626; color: white; } 
         .btn-fire { background-color: #ea580c; color: white; }
         
-        
         @media (max-width: 950px) {
             body { flex-direction: column; }
             #main-area { order: 1; padding-top: 10px; }
             
             #ad-sidebar { 
-                order: 2; width: 100%; height: 60px; 
+                order: 2; width: 100%; height: 90px; 
                 border-right: none; border-top: 3px solid #94a3b8; padding: 5px; 
             }
             
@@ -117,7 +117,6 @@
             button { 
                 width: 100%; 
                 margin: 0;
-               
                 padding: clamp(6px, 2vh, 10px) 2px; 
                 font-size: clamp(10px, 3.5vw, 13px);
                 white-space: nowrap;
@@ -126,12 +125,23 @@
     </style>
 </head>
 <body>
-    <div id="ad-sidebar"><div class="ad-banner">Ad Space</div></div>
+    <div id="ad-sidebar">
+        <div class="ad-banner">
+            <!-- Google AdSense Display Unit -->
+            <ins class="adsbygoogle"
+                 style="display:block; width: 100%; height: 100%;"
+                 data-ad-client="ca-pub-1919515145645580"
+                 data-ad-slot=""8510900975" 
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        </div>
+    </div>
+    
     <div id="main-area">
         <div id="canvas-container"><canvas id="gameCanvas"></canvas></div>
         
         <div id="temp-controls">
-            
             <div class="brush-controls">
                 <span style="font-weight: bold; color: #64748b; margin-right: 5px;">Size:</span>
                 <button class="btn-size" onclick="window.setBrush(window.scaleVal(8), this)">S</button>
@@ -140,29 +150,35 @@
             </div>
             <button class="btn-reset" onclick="window.resetGrid()">Reset</button>
 
-           
             <button class="element-btn btn-empty" onclick="window.selectElement(0, this)">Empty</button>
             <button class="element-btn btn-wall" onclick="window.selectElement(13, this)">Wall</button>
             <button class="element-btn btn-sand active-element" onclick="window.selectElement(4, this)">Sand</button>
-            
-            
             <button class="element-btn btn-water" onclick="window.selectElement(3, this)">Water</button>
             <button class="element-btn btn-ice" onclick="window.selectElement(14, this)">Ice cubes</button>
             <button class="element-btn btn-fire" onclick="window.selectElement(9, this)">Fire</button>
-            
-            
             <button class="element-btn btn-seed" onclick="window.selectElement(8, this)">Seed</button>
             <button class="element-btn btn-mite" onclick="window.selectElement(6, this)">Mite</button>
             <button class="element-btn btn-fish" onclick="window.selectElement(5, this)">Fish</button>
-            
-           
             <button class="element-btn btn-gas" onclick="window.selectElement(12, this)">Gas</button>
             <button class="element-btn btn-oil" onclick="window.selectElement(10, this)">Oil</button>
             <button class="element-btn btn-lava" onclick="window.selectElement(11, this)">Lava</button>
-            
-            
-            
-            
+        </div>
+
+        <!-- AdSense SEO & Footer Text -->
+        <div style="max-width: 800px; margin: 40px auto; padding: 20px; font-family: sans-serif; color: #334155; text-align: left; background: #ffffff; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+            <h1 style="font-size: 1.5rem; margin-top: 0;">FishFlow: Pixel Ecosystem Sandbox</h1>
+            <p>Welcome to FishFlow, an interactive cellular automata physics sandbox where you can build and destroy a living, breathing ecosystem pixel by pixel.</p>
+            <h2 style="font-size: 1.2rem;">How to Play</h2>
+            <ul style="line-height: 1.6;">
+                <li><strong>Water & Sand:</strong> Build the foundation of your tank.</li>
+                <li><strong>Smart Seeds & Plants:</strong> Drop seeds to grow procedural canopies.</li>
+                <li><strong>Fish & Mites:</strong> Add AI-driven creatures that hunt for food.</li>
+                <li><strong>Hazardous Gas & Fire:</strong> Release flammable gas and ignite it for explosive chain reactions!</li>
+            </ul>
+            <hr style="margin: 20px 0; border: 0; border-top: 1px solid #cbd5e1;">
+            <footer style="text-align: center; font-size: 0.85em;">
+                &copy; 2026 FishFlow.in | <a href="/privacy.html" style="color: #2563eb; text-decoration: none;">Privacy Policy</a>
+            </footer>
         </div>
     </div>
     
