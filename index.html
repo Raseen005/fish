@@ -26,14 +26,12 @@
         
         #main-area {
             flex-grow: 1; display: flex; flex-direction: column; align-items: center;
-            justify-content: flex-start; padding-top: 4vh; width: 100%; overflow-y: auto;
+            justify-content: flex-start; padding-top: 4vh; width: 100%; overflow: hidden;
         }
         
         #canvas-container {
-            width: 100%; 
-            flex: 0 0 90vh; /* Forces the canvas to always take up 65% of the screen height */
-            display: flex; align-items: center;
-            justify-content: center; padding: 10px; box-sizing: border-box; 
+            width: 100%; flex: 1 1 auto; display: flex; align-items: center;
+            justify-content: center; padding: 10px; box-sizing: border-box; min-height: 0; 
         }
         
         canvas {
@@ -128,7 +126,7 @@
 <body>
     <div id="ad-sidebar">
         <div class="ad-banner">
-            <!-- Google AdSense Display Unit (Typo fixed) -->
+            <!-- Google AdSense Display Unit -->
             <ins class="adsbygoogle"
                  style="display:block; width: 100%; height: 100%;"
                  data-ad-client="ca-pub-1919515145645580"
@@ -164,22 +162,10 @@
             <button class="element-btn btn-oil" onclick="window.selectElement(10, this)">Oil</button>
             <button class="element-btn btn-lava" onclick="window.selectElement(11, this)">Lava</button>
         </div>
-
-        <!-- AdSense SEO & Footer Text (Compact Version) -->
-        <div style="max-width: 800px; margin: 15px auto; padding: 15px; font-family: sans-serif; color: #334155; text-align: left; background: #ffffff; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); font-size: 0.9rem;">
-            <h1 style="font-size: 1.2rem; margin-top: 0; margin-bottom: 5px;">FishFlow: Pixel Ecosystem Sandbox</h1>
-            <p style="margin: 5px 0 15px 0;">Welcome to FishFlow, an interactive cellular automata physics sandbox where you can build and destroy a living, breathing ecosystem pixel by pixel.</p>
-            <h2 style="font-size: 1rem; margin-bottom: 5px;">How to Play</h2>
-            <ul style="line-height: 1.4; margin-top: 0;">
-                <li><strong>Water & Sand:</strong> Build the foundation.</li>
-                <li><strong>Smart Seeds & Plants:</strong> Drop seeds to grow procedural canopies.</li>
-                <li><strong>Fish & Mites:</strong> Add AI-driven creatures that hunt for food.</li>
-                <li><strong>Hazardous Gas & Fire:</strong> Ignite gas for explosive chain reactions!</li>
-            </ul>
-            <hr style="margin: 15px 0; border: 0; border-top: 1px solid #cbd5e1;">
-            <footer style="text-align: center; font-size: 0.8em;">
-                &copy; 2026 FishFlow.in | <a href="/privacy.html" style="color: #2563eb; text-decoration: none;">Privacy Policy</a>
-            </footer>
+        
+        <!-- Minimal Privacy Link for AdSense Compliance -->
+        <div style="margin-top: auto; padding-bottom: 10px; font-size: 11px;">
+            <a href="/privacy.html" style="color: #94a3b8; text-decoration: none;">Privacy Policy</a>
         </div>
     </div>
     
