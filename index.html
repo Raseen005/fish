@@ -7,8 +7,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Fishflow</title>
-    <meta name="description" content="Dive into FishFlow, an interactive pixel physics sandbox! Build thriving aquatic ecosystems with sand and water, or destroy it all with fire and lava. Play for free!">
-    <link rel="icon" type="image/png" href="./assets/logo.png">
+    <!-- Updated Meta Description for SEO -->
+    <meta name="description" content="Looking for a relaxing online game? Unwind with FishFlow, a calming pixel physics sandbox. Build peaceful ecosystems or experiment with the elements for stress relief and relaxation. Play for free!">
+    <link rel="icon" type="image/png" href="/assets/logo.png">
     <style>
         body {
             margin: 0; background-color: #e2e8f0; color: #1e293b;
@@ -93,6 +94,28 @@
         .btn-lava { background-color: #dc2626; color: white; } 
         .btn-fire { background-color: #ea580c; color: white; }
 
+        /* --- SEO CONTENT BLOCK STYLING --- */
+        .seo-content {
+            width: 100%;
+            padding: 10px 20px;
+            text-align: center;
+            color: #64748b;
+            font-size: 11px;
+            box-sizing: border-box;
+            flex: 0 0 auto; /* Ensures it takes up space naturally without squishing other elements */
+        }
+        
+        .seo-content h1 {
+            font-size: 12px;
+            margin: 0 0 4px 0;
+            color: #475569;
+        }
+
+        .seo-content p {
+            margin: 0;
+            opacity: 0.8;
+        }
+
         .privacy-footer {
             flex: 0 0 auto; width: 100%; text-align: center; padding-bottom: 5px;
         }
@@ -154,10 +177,16 @@
                 padding: 5px; 
                 background-color: transparent; /* Makes the banner area blend perfectly */
             }
+
+            /* 4. SEO Content explicitly ordered below the Ad */
+            .seo-content {
+                order: 4;
+                padding: 10px 15px; /* Slightly tighter padding for mobile */
+            }
             
-            /* 4. Privacy Policy pushed to the very bottom */
+            /* 5. Privacy Policy pushed to the very bottom */
             .privacy-footer { 
-                order: 4; 
+                order: 5; 
                 flex: 0 0 auto; 
                 margin-top: auto; /* Pushes the link to the bottom edge, swallowing any leftover empty space */
                 padding: 15px 0;
@@ -215,6 +244,12 @@
             <button class="element-btn btn-gas" onclick="window.selectElement(12, this)">Gas</button>
             <button class="element-btn btn-oil" onclick="window.selectElement(10, this)">Oil</button>
             <button class="element-btn btn-lava" onclick="window.selectElement(11, this)">Lava</button>
+        </div>
+
+        <!-- ADDED: SEO Content Block (Targeting Relaxation & Online Games) -->
+        <div class="seo-content">
+            <h1>FishFlow: A Relaxing Online Game & Physics Sandbox</h1>
+            <p>Discover ultimate relaxation with FishFlow, a free browser-based falling sand simulator. Whether you are looking for calming online games to unwind, or a creative outlet for stress relief, this cellular automata sandbox lets you build peaceful aquatic ecosystems or trigger satisfying pixel reactions at your own pace.</p>
         </div>
         
         <div class="privacy-footer">
