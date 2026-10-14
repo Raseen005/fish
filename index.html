@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H4VGZCNKLZ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-H4VGZCNKLZ');
+    </script>
+
     <meta name="google-adsense-account" content="ca-pub-1919515145645580">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1919515145645580"
      crossorigin="anonymous"></script>
@@ -102,7 +112,7 @@
             color: #64748b;
             font-size: 11px;
             box-sizing: border-box;
-            flex: 0 0 auto; /* Ensures it takes up space naturally without squishing other elements */
+            flex: 0 0 auto;
         }
         
         .seo-content h1 {
@@ -131,14 +141,13 @@
                 flex-direction: column; 
                 height: auto; 
                 min-height: 100vh;
-                overflow-y: auto; /* Restores natural scrolling for mobile */
+                overflow-y: auto; 
             }
             
             #main-area { 
-                display: contents; /* Magic trick: Flattens the layout so elements stack perfectly in order */
+                display: contents; 
             }
             
-            /* 1. Canvas at the absolute top */
             #canvas-container { 
                 order: 1; 
                 width: 100%; 
@@ -149,10 +158,9 @@
             canvas {
                 width: 100%; 
                 height: auto; 
-                max-height: none; /* Guarantees the canvas spans 100% of the screen width */
+                max-height: none; 
             }
             
-            /* 2. Buttons directly underneath the canvas */
             #temp-controls { 
                 order: 2; 
                 width: 100%;
@@ -164,31 +172,28 @@
                 max-height: none; 
             }
             
-            /* 3. Ad Banner directly underneath the buttons */
             #ad-sidebar { 
                 order: 3; 
                 width: 100%; 
                 max-width: 100%;
                 flex: 0 0 auto; 
                 height: auto; 
-                min-height: 55px; /* Exact height for AdSense mobile banner */
+                min-height: 55px;
                 border-right: none; 
                 border-top: 2px solid #94a3b8; 
                 padding: 5px; 
-                background-color: transparent; /* Makes the banner area blend perfectly */
+                background-color: transparent; 
             }
 
-            /* 4. SEO Content explicitly ordered below the Ad */
             .seo-content {
                 order: 4;
-                padding: 10px 15px; /* Slightly tighter padding for mobile */
+                padding: 10px 15px; 
             }
             
-            /* 5. Privacy Policy pushed to the very bottom */
             .privacy-footer { 
                 order: 5; 
                 flex: 0 0 auto; 
-                margin-top: auto; /* Pushes the link to the bottom edge, swallowing any leftover empty space */
+                margin-top: auto; 
                 padding: 15px 0;
             }
             
@@ -246,7 +251,6 @@
             <button class="element-btn btn-lava" onclick="window.selectElement(11, this)">Lava</button>
         </div>
 
-        <!-- ADDED: SEO Content Block (Targeting Relaxation & Online Games) -->
         <div class="seo-content">
             <h1>FishFlow: A Relaxing Online Game & Physics Sandbox</h1>
             <p>Discover ultimate relaxation with FishFlow, a free browser-based falling sand simulator. Whether you are looking for calming online games to unwind, or a creative outlet for stress relief, this cellular automata sandbox lets you build peaceful aquatic ecosystems or trigger satisfying pixel reactions at your own pace.</p>
