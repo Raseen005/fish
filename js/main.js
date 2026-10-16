@@ -84,7 +84,6 @@ function generateNaturalLandscape() {
         }
     }
 }
-// --- UPDATED RESET FUNCTION ---
 window.resetGrid = function() {
     for (let x = 0; x < cols; x++) {
         for (let y = 0; y < rows; y++) { 
@@ -94,10 +93,8 @@ window.resetGrid = function() {
             dirY[x][y] = 0;
         }
     }
-    // Automatically redraw the landscape when hitting reset
-    generateNaturalLandscape();
+    // We removed generateNaturalLandscape() from here so it stays blank!
 };
-
 function applyBrush(cx, cy) {
     for(let i = -brushRadius; i <= brushRadius; i++) {
         for(let j = -brushRadius; j <= brushRadius; j++) {
