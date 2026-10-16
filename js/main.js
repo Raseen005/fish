@@ -8,7 +8,7 @@ import { updateOil } from './elements/oil.js';
 import { updateMite } from './elements/mite.js';
 import { updateFish } from './elements/fish.js'; 
 import { updateSeed } from './elements/seed.js';
-import { updateGas } from './elements/gas.js'; // IMPORT NEW GAS ELEMENT
+import { updateGas } from './elements/gas.js'; 
 
 const canvas = document.getElementById('gameCanvas');
 canvas.width = cols; canvas.height = rows;
@@ -38,8 +38,64 @@ window.selectElement = function(id, btnElement) {
     document.querySelectorAll('.element-btn').forEach(btn => btn.classList.remove('active-element'));
     if (btnElement) btnElement.classList.add('active-element');
 };
+
+// --- NEW LANDSCAPE GENERATION LOGIC ---
+// --- ANIMATED LANDSCAPE GENERATION LOGIC ---
+function generateNaturalLandscape() {
+    let waterLevel = Math.floor(rows * 0.65); 
+    
+    for (let x = 0; x < cols; x++) {
+        // 1. Calculate the final target shape for this column
+        let hillHeight = Math.floor(rows * 0.55 + Math.sin(x * 0.04) * 30 + Math.cos(x * 0.015) * 20);
+        
+        // 2. Figure out exactly how many pixels of each element this column needs
+        let sandCount = rows - hillHeight;
+        let waterCount = hillHeight > waterLevel ? hillHeight - waterLevel : 0;
+        
+        // Only spawn seeds on dry land (where the hill is higher than the water level)
+        let hasSeed = Math.random() < 0.10 && hillHeight <= waterLevel;
+
+        // 3. Spawn everything at the VERY TOP of the screen (starting at y = 0)
+        let currentY = 0; 
+        
+        // Put Water at the top of the falling clump
+        for (let i = 0; i < waterCount; i++) {
+            grid[x][currentY] = E.Water;
+            dirX[x][currentY] = Math.random() > 0.5 ? 1 : -1;
+            dirY[x][currentY] = 0;
+            currentY++;
+        }
+
+        // Put the Seed right below the water
+        if (hasSeed) {
+            grid[x][currentY] = E.Seed;
+            meta[x][currentY] = 0;
+            dirX[x][currentY] = 0;
+            dirY[x][currentY] = 0;
+            currentY++;
+        }
+
+        // Put Sand at the bottom of the clump (so it hits the floor first)
+        for (let i = 0; i < sandCount; i++) {
+            grid[x][currentY] = E.Sand;
+            dirX[x][currentY] = Math.random() > 0.5 ? 1 : -1;
+            dirY[x][currentY] = 0;
+            currentY++;
+        }
+    }
+}
+// --- UPDATED RESET FUNCTION ---
 window.resetGrid = function() {
-    for (let x = 0; x < cols; x++) for (let y = 0; y < rows; y++) { grid[x][y] = E.Empty; meta[x][y] = 0; }
+    for (let x = 0; x < cols; x++) {
+        for (let y = 0; y < rows; y++) { 
+            grid[x][y] = E.Empty; 
+            meta[x][y] = 0; 
+            dirX[x][y] = 0;
+            dirY[x][y] = 0;
+        }
+    }
+    // Automatically redraw the landscape when hitting reset
+    generateNaturalLandscape();
 };
 
 function applyBrush(cx, cy) {
@@ -173,7 +229,7 @@ function updateGrid() {
                 case E.Mite: updateMite(x, y); break; 
                 case E.Fish: updateFish(x, y); break;
                 case E.Seed: updateSeed(x, y); break;
-                case E.Gas: updateGas(x, y); break; // REGISTERS THE GAS LOGIC
+                case E.Gas: updateGas(x, y); break; 
             }
         }
     }
@@ -386,4 +442,7 @@ function draw() {
 }
 
 function loop() { updateGrid(); draw(); requestAnimationFrame(loop); }
+
+// TRIGGER LANDSCAPE GENERATION ON LOAD
+generateNaturalLandscape(); 
 loop();
