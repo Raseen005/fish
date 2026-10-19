@@ -1,25 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H4VGZCNKLZ"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-H4VGZCNKLZ');
-    </script>
-
     <meta name="google-adsense-account" content="ca-pub-1919515145645580">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1919515145645580"
      crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Fishflow</title>
-    <!-- Updated Meta Description for SEO -->
-    <meta name="description" content="Looking for a relaxing online game? Unwind with FishFlow, a calming pixel physics sandbox. Build peaceful ecosystems or experiment with the elements for stress relief and relaxation. Play for free!">
-    <link rel="icon" type="image/jpeg" href="/assets/logo.jpg">
     <style>
         body {
             margin: 0; background-color: #e2e8f0; color: #1e293b;
@@ -104,28 +91,6 @@
         .btn-lava { background-color: #dc2626; color: white; } 
         .btn-fire { background-color: #ea580c; color: white; }
 
-        /* --- SEO CONTENT BLOCK STYLING --- */
-        .seo-content {
-            width: 100%;
-            padding: 10px 20px;
-            text-align: center;
-            color: #64748b;
-            font-size: 11px;
-            box-sizing: border-box;
-            flex: 0 0 auto;
-        }
-        
-        .seo-content h1 {
-            font-size: 12px;
-            margin: 0 0 4px 0;
-            color: #475569;
-        }
-
-        .seo-content p {
-            margin: 0;
-            opacity: 0.8;
-        }
-
         .privacy-footer {
             flex: 0 0 auto; width: 100%; text-align: center; padding-bottom: 5px;
         }
@@ -141,13 +106,14 @@
                 flex-direction: column; 
                 height: auto; 
                 min-height: 100vh;
-                overflow-y: auto; 
+                overflow-y: auto; /* Restores natural scrolling for mobile */
             }
             
             #main-area { 
-                display: contents; 
+                display: contents; /* Magic trick: Flattens the layout so elements stack perfectly in order */
             }
             
+            /* 1. Canvas at the absolute top */
             #canvas-container { 
                 order: 1; 
                 width: 100%; 
@@ -158,9 +124,10 @@
             canvas {
                 width: 100%; 
                 height: auto; 
-                max-height: none; 
+                max-height: none; /* Guarantees the canvas spans 100% of the screen width */
             }
             
+            /* 2. Buttons directly underneath the canvas */
             #temp-controls { 
                 order: 2; 
                 width: 100%;
@@ -172,28 +139,25 @@
                 max-height: none; 
             }
             
+            /* 3. Ad Banner directly underneath the buttons */
             #ad-sidebar { 
                 order: 3; 
                 width: 100%; 
                 max-width: 100%;
                 flex: 0 0 auto; 
                 height: auto; 
-                min-height: 55px;
+                min-height: 55px; /* Exact height for AdSense mobile banner */
                 border-right: none; 
                 border-top: 2px solid #94a3b8; 
                 padding: 5px; 
-                background-color: transparent; 
-            }
-
-            .seo-content {
-                order: 4;
-                padding: 10px 15px; 
+                background-color: transparent; /* Makes the banner area blend perfectly */
             }
             
+            /* 4. Privacy Policy pushed to the very bottom */
             .privacy-footer { 
-                order: 5; 
+                order: 4; 
                 flex: 0 0 auto; 
-                margin-top: auto; 
+                margin-top: auto; /* Pushes the link to the bottom edge, swallowing any leftover empty space */
                 padding: 15px 0;
             }
             
@@ -236,6 +200,8 @@
                 <button class="btn-size" onclick="window.setBrush(window.scaleVal(13), this)">L</button>
             </div>
             <button class="btn-reset" onclick="window.resetGrid()">Reset</button>
+            <button class="element-btn" id="mute-btn" onclick="window.toggleMute(this)" style="background-color: #334155; color: white; margin-right: 5px;">🔊 Mute</button>
+
 
             <button class="element-btn btn-empty" onclick="window.selectElement(0, this)">Empty</button>
             <button class="element-btn btn-wall" onclick="window.selectElement(13, this)">Wall</button>
@@ -249,11 +215,6 @@
             <button class="element-btn btn-gas" onclick="window.selectElement(12, this)">Gas</button>
             <button class="element-btn btn-oil" onclick="window.selectElement(10, this)">Oil</button>
             <button class="element-btn btn-lava" onclick="window.selectElement(11, this)">Lava</button>
-        </div>
-
-        <div class="seo-content">
-            <h1>FishFlow: A Relaxing Online Game & Physics Sandbox</h1>
-            <p>Discover ultimate relaxation with FishFlow, a free browser-based falling sand simulator. Whether you are looking for calming online games to unwind, or a creative outlet for stress relief, this cellular automata sandbox lets you build peaceful aquatic ecosystems or trigger satisfying pixel reactions at your own pace.</p>
         </div>
         
         <div class="privacy-footer">
