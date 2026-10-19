@@ -39,26 +39,59 @@ window.selectElement = function(id, btnElement) {
     if (btnElement) btnElement.classList.add('active-element');
 };
 
-// --- NEW LANDSCAPE GENERATION LOGIC ---
+// --- SOUND MANAGER (BGM ONLY) ---
+let isMuted = false;
+let bgmStarted = false;
+
+
+const bgm = new Audio('./assets/home.mp3');
+bgm.loop = true;
+bgm.volume = 0.45; 
+
+window.toggleMute = function(btnElement) {
+    isMuted = !isMuted;
+    if (isMuted) {
+        bgm.pause();
+        btnElement.innerText = "🔇 Unmute";
+        btnElement.style.backgroundColor = "#94a3b8"; 
+    } else {
+        bgm.play().catch(()=>{});
+        btnElement.innerText = "🔊 Mute";
+        btnElement.style.backgroundColor = "#334155"; 
+    }
+};
+
+// Empty functions safely absorb impact requests from fish.js and sand.js without causing lag
+window.playImpactSound = function(id) {};
+window.playElementSound = function(id) {};
+
+function startMusic() {
+    if (!bgmStarted && !isMuted) {
+        bgm.play().catch(()=>{});
+        bgmStarted = true;
+        window.removeEventListener('mousedown', startMusic);
+        window.removeEventListener('touchstart', startMusic);
+    }
+}
+window.addEventListener('mousedown', startMusic);
+window.addEventListener('touchstart', startMusic);
+// --- END SOUND MANAGER ---
+
+
 // --- ANIMATED LANDSCAPE GENERATION LOGIC ---
 function generateNaturalLandscape() {
     let waterLevel = Math.floor(rows * 0.65); 
     
     for (let x = 0; x < cols; x++) {
-        // 1. Calculate the final target shape for this column
         let hillHeight = Math.floor(rows * 0.55 + Math.sin(x * 0.04) * 30 + Math.cos(x * 0.015) * 20);
         
-        // 2. Figure out exactly how many pixels of each element this column needs
         let sandCount = rows - hillHeight;
         let waterCount = hillHeight > waterLevel ? hillHeight - waterLevel : 0;
         
-        // Only spawn seeds on dry land (where the hill is higher than the water level)
         let hasSeed = Math.random() < 0.10 && hillHeight <= waterLevel;
 
-        // 3. Spawn everything at the VERY TOP of the screen (starting at y = 0)
         let currentY = 0; 
         
-        // Put Water at the top of the falling clump
         for (let i = 0; i < waterCount; i++) {
             grid[x][currentY] = E.Water;
             dirX[x][currentY] = Math.random() > 0.5 ? 1 : -1;
@@ -66,7 +99,6 @@ function generateNaturalLandscape() {
             currentY++;
         }
 
-        // Put the Seed right below the water
         if (hasSeed) {
             grid[x][currentY] = E.Seed;
             meta[x][currentY] = 0;
@@ -75,7 +107,6 @@ function generateNaturalLandscape() {
             currentY++;
         }
 
-        // Put Sand at the bottom of the clump (so it hits the floor first)
         for (let i = 0; i < sandCount; i++) {
             grid[x][currentY] = E.Sand;
             dirX[x][currentY] = Math.random() > 0.5 ? 1 : -1;
@@ -84,6 +115,7 @@ function generateNaturalLandscape() {
         }
     }
 }
+
 window.resetGrid = function() {
     for (let x = 0; x < cols; x++) {
         for (let y = 0; y < rows; y++) { 
@@ -93,8 +125,8 @@ window.resetGrid = function() {
             dirY[x][y] = 0;
         }
     }
-    // We removed generateNaturalLandscape() from here so it stays blank!
 };
+
 function applyBrush(cx, cy) {
     for(let i = -brushRadius; i <= brushRadius; i++) {
         for(let j = -brushRadius; j <= brushRadius; j++) {
@@ -131,7 +163,6 @@ function applyBrush(cx, cy) {
                         if (currentElement === E.Fire && Math.random() > 0.95) continue; 
                         if (currentElement === E.Mite && Math.random() > 0.05) continue; 
                         
-                        // Scatter gas loosely
                         if (currentElement === E.Gas && Math.random() > 0.15) continue; 
 
                         grid[nx][ny] = currentElement; 
@@ -284,7 +315,6 @@ function draw() {
                 else { rInt = 220 + (Math.random() * 30); gInt = 15; bInt = 0; }
                 rInt = Math.max(0, Math.min(255, rInt)); gInt = Math.max(0, Math.min(255, gInt)); bInt = Math.max(0, Math.min(255, bInt));
             }
-            // LIGHT GREEN GAS SHADER
             else if (id === E.Gas) {
                 let flicker = Math.random() * 25;
                 rInt = 150 + flicker; gInt = 230 + flicker; bInt = 100 + flicker; 
@@ -293,10 +323,10 @@ function draw() {
                 let state = meta[x][y] || 0;
                 
                 if (state === 0) {
-                    rInt = 140; gInt = 80; bInt = 30; // Dormant Seed
+                    rInt = 140; gInt = 80; bInt = 30;
                 } else {
-                    rInt = 34; gInt = 160 + (Math.random() * 40); bInt = 50; // Stem
-                    if (state === 1) { rInt = 100; gInt = 230; bInt = 100; } // Growing Tip
+                    rInt = 34; gInt = 160 + (Math.random() * 40); bInt = 50; 
+                    if (state === 1) { rInt = 100; gInt = 230; bInt = 100; } 
 
                     if (state < 0) {
                         let fr = 255, fg = 255, fb = 255;
@@ -440,6 +470,5 @@ function draw() {
 
 function loop() { updateGrid(); draw(); requestAnimationFrame(loop); }
 
-// TRIGGER LANDSCAPE GENERATION ON LOAD
 generateNaturalLandscape(); 
 loop();
